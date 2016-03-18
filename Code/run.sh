@@ -2,7 +2,7 @@
 
 make
 ./cg_label ../out
-if [[ $1 -e --no-graph ]]; then
+if [[ $12 -e --no-graph ]]; then
    exit 1
 fi
 dot -Tps graph.dot -o graph.ps
