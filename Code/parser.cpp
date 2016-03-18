@@ -16,7 +16,7 @@ void add_callee_function(string line) {
 }
 
 void add_caller_function(string line) {
-	int pos = line.find("}") + 5;
+	int pos = line.find("}") + 6;
 	int end = line.find(")") - 1;
 	string callee_name = line.substr(pos, end - pos);
 	pos = line.find(":") + 1;
