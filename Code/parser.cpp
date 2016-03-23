@@ -1,4 +1,4 @@
-// Works on command produced by cflow -rlrd2 <rtl-file>
+// Works on command produced by cflow -rlrd2 <c++ file>
 // Add support for same name different return val, params functions by changing fn_name
 #include "parser.h"
 

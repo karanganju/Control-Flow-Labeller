@@ -1,62 +1,90 @@
-/* A typical recursive implementation of quick sort */
-#include<stdio.h>
+// An iterative implementation of quick sort
+#include <stdio.h>
  
 // A utility function to swap two elements
-void swap(int* a, int* b)
+void swap ( int* a, int* b )
 {
     int t = *a;
     *a = *b;
     *b = t;
 }
  
-/* This function takes last element as pivot, places the pivot element at its
-   correct position in sorted array, and places all smaller (smaller than pivot)
-   to left of pivot and all greater elements to right of pivot */
+/* This function is same in both iterative and recursive*/
 int partition (int arr[], int l, int h)
 {
-    int x = arr[h];    // pivot
-    int i = (l - 1);  // Index of smaller element
+    int x = arr[h];
+    int i = (l - 1);
  
     for (int j = l; j <= h- 1; j++)
     {
-        // If current element is smaller than or equal to pivot 
         if (arr[j] <= x)
         {
-            i++;    // increment index of smaller element
-            swap(&arr[i], &arr[j]);  // Swap current element with index
+            i++;
+            swap (&arr[i], &arr[j]);
         }
     }
-    swap(&arr[i + 1], &arr[h]);  
+    swap (&arr[i + 1], &arr[h]);
     return (i + 1);
 }
  
-/* arr[] --> Array to be sorted, l  --> Starting index, h  --> Ending index */
-void quickSort(int arr[], int l, int h)
+/* A[] --> Array to be sorted, 
+   l  --> Starting index, 
+   h  --> Ending index */
+void quickSortIterative (int arr[], int l, int h)
 {
-    if (l < h)
+    // Create an auxiliary stack
+    int stack[ h - l + 1 ];
+ 
+    // initialize top of stack
+    int top = -1;
+ 
+    // push initial values of l and h to stack
+    stack[ ++top ] = l;
+    stack[ ++top ] = h;
+ 
+    // Keep popping from stack while is not empty
+    while ( top >= 0 )
     {
-        int p = partition(arr, l, h); /* Partitioning index */
-        quickSort(arr, l, p - 1);
-        quickSort(arr, p + 1, h);
+        // Pop h and l
+        h = stack[ top-- ];
+        l = stack[ top-- ];
+ 
+        // Set pivot element at its correct position
+        // in sorted array
+        int p = partition( arr, l, h );
+ 
+        // If there are elements on left side of pivot,
+        // then push left side to stack
+        if ( p-1 > l )
+        {
+            stack[ ++top ] = l;
+            stack[ ++top ] = p - 1;
+        }
+ 
+        // If there are elements on right side of pivot,
+        // then push right side to stack
+        if ( p+1 < h )
+        {
+            stack[ ++top ] = p + 1;
+            stack[ ++top ] = h;
+        }
     }
 }
  
-/* Function to print an array */
-void printArray(int arr[], int size)
+// A utility function to print contents of arr
+void printArr( int arr[], int n )
 {
     int i;
-    for (i=0; i < size; i++)
-        printf("%d ", arr[i]);
-    printf("\n");
+    for ( i = 0; i < n; ++i )
+        printf( "%d ", arr[i] );
 }
  
 // Driver program to test above functions
 int main()
 {
-    int arr[] = {10, 7, 8, 9, 1, 5};
-    int n = sizeof(arr)/sizeof(arr[0]);
-    quickSort(arr, 0, n-1);
-    printf("Sorted array: \n");
-    printArray(arr, n);
+    int arr[] = {4, 3, 5, 2, 1, 3, 2, 3};
+    int n = sizeof( arr ) / sizeof( *arr );
+    quickSortIterative( arr, 0, n - 1 );
+    printArr( arr, n );
     return 0;
 }
