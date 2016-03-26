@@ -1,9 +1,4 @@
 #include "condenser.h"
-#include <map>
-#include <stack>
-#include <stdlib.h>
-
-using namespace std;
 
 int *node, *lowlink, *SCC;
 bool* stacked;

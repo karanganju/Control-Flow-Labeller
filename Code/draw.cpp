@@ -1,15 +1,12 @@
 #include "draw.h"
-#include <fstream>
-#include <iostream>
-using namespace std;
 
-void drawdot(int count, int SCC_count, string names[], int SCC[], int *edges) {
+void drawdot(int count, int SCC_count, string names[], int SCC[], int edges[], int labelling[]) {
 	int SCC_rep[SCC_count];
 	ofstream myfile;
 	myfile.open ("graph.dot");
 	myfile << "digraph G {\n\tgraph [fontsize=10 fontname=\"Verdana\" compound=true];\n\tnode [shape=record fontsize=10 fontname=\"Verdana\"];\n\t";
 	for (int i = 0; i < SCC_count; i++) {
-		myfile << "subgraph cluster_" << i << "{\n\t\tlabel = \"SCC_" << i << "\";\n\t\t";
+		myfile << "subgraph cluster_" << i << "{\n\t\tlabel = \""<< labelling[i] <<"_SCC_" << i << "\";\n\t\t";
 		for (int j = 0; j < count; j++) if (SCC[j] == i) {
 			myfile << names[j] << "; ";
 			SCC_rep[i] = j;

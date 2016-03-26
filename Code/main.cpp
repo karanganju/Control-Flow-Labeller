@@ -1,6 +1,7 @@
 #include "parser.h"
 #include "condenser.h"
 #include "draw.h"
+#include "labeller.h"
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
@@ -39,6 +40,7 @@ int main(int argc, char *argv[]) {
 	for (int i = 0; i < SCC_count; i++) for (int j = 0; j < SCC_count; j++) SCC_transitions[i * SCC_count + j] = 0;
 	for (int i = 0; i < count; i++) for (list<int>::iterator j = callee_graph_stripped[i].begin(); j != callee_graph_stripped[i].end(); j++) SCC_transitions[function_SCC[i] * SCC_count + function_SCC[*j]] = 1;
 
-	drawdot(count, SCC_count, int_to_str, function_SCC, SCC_transitions);
+	int* labelling = label(SCC_count, str_to_int, function_SCC, SCC_transitions);
+	drawdot(count, SCC_count, int_to_str, function_SCC, SCC_transitions, labelling);
 
 }
